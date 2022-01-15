@@ -110,7 +110,7 @@ fn border_radius(
     let draw = |img: &mut ImageBuffer<Rgba<u8>, Vec<u8>>, alpha, x, y| {
         debug_assert!((1..=256).contains(&alpha));
         let pixel_alpha = &mut img[coordinates(r0 - x, r0 - y)].0[3];
-        *pixel_alpha = (((alpha - 1) * *pixel_alpha as u16 + 127) / 255) as u8;
+        *pixel_alpha = ((alpha * *pixel_alpha as u16 + 128) / 256) as u8;
     };
 
     'l: loop {
