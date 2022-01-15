@@ -90,6 +90,9 @@ fn border_radius(
     r: u32,
     coordinates: impl Fn(u32, u32) -> (u32, u32),
 ) {
+    if r == 0 {
+        return;
+    }
     let r0 = r;
 
     // 16x antialiasing: 16x16 grid creates 256 possible shades, great for u8!
