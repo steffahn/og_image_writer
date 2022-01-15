@@ -140,13 +140,14 @@ fn border_radius(
         for _ in 0..16 {
             skip_draw = false;
 
+            if x >= y {
+                break 'l;
+            }
+
             alpha += y as u16 % 16 + 1;
             if p < 0 {
                 x += 1;
                 p += (2 * x + 2) as i32;
-                if x >= y {
-                    break 'l;
-                }
             } else {
                 // draw when moving to next pixel in y-direction
                 if y % 16 == 0 {
@@ -159,15 +160,16 @@ fn border_radius(
                 x += 1;
                 p -= (2 * (y - x) + 2) as i32;
                 y -= 1;
-                if x >= y {
-                    break 'l;
-                }
             }
         }
     }
 
     // one corner pixel left
     if x / 16 == y / 16 {
+        // column under current position possibly not yet accounted
+        if x == y {
+            alpha += y as u16 % 16 + 1;
+        }
         let s = y as u16 % 16 + 1;
         let alpha = 2 * alpha - s * s;
         draw(img, alpha, x / 16, y / 16);
