@@ -15,7 +15,6 @@ impl OGImageWriter {
             None => return Err(Error::NotFoundContainerImage),
         };
 
-        // TODO: support border for image
         round(&mut image, &mut style.border_radius.clone());
 
         let img = Element::Img(Some(Img::new(
